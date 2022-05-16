@@ -5,7 +5,6 @@ import java.util.Arrays;
 import java.util.List;
 
 public class WinningNumbers {
-
     private List<Integer> winningNumbers;
 
     public WinningNumbers(String number) {

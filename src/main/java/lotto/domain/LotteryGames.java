@@ -23,7 +23,7 @@ public class LotteryGames {
 
     public void create(int number) {
         for (int i = 0; i < number; i++) {
-            LotteryGame lotteryGame = new LotteryGame().create();
+            LotteryGame lotteryGame = LotteryGame.create();
             lotteryGames.add(lotteryGame);
         }
     }
