@@ -20,11 +20,15 @@ public class WinningResult {
         }
     };
 
-    private WinningResult() {
-        throw new AssertionError();
+    private WinningData winningData;
+    private LotteryGames lotteryGames;
+
+    public WinningResult(WinningData winningData, LotteryGames lotteryGames) {
+        this.winningData = winningData;
+        this.lotteryGames = lotteryGames;
     }
 
-    public static Map<Rank, Integer> get(List<Integer> winningNumbers, int bonusNumber,  LotteryGames lotteryGames) {
+    private Map<Rank, Integer> get() {
         for (LotteryGame lotteryGame : lotteryGames.getLotteryGames()) {
             int correctNumbers = getCorrectNumbers(winningNumbers, lotteryGame);
 
@@ -38,18 +42,18 @@ public class WinningResult {
         return RESULT_MAP;
     }
 
-    private static boolean isNotWin(int correctNumbers) {
+    private boolean isNotWin(int correctNumbers) {
         return correctNumbers < WINNING_CRITERIA;
     }
 
-    private static boolean isSecondRank(int bonusNumber, LotteryGame lotteryGame, int correctNumbers) {
+    private boolean isSecondRank(int bonusNumber, LotteryGame lotteryGame, int correctNumbers) {
         if (correctNumbers == 5) {
             return isContainedBonusNumber(bonusNumber, lotteryGame);
         }
         return false;
     }
 
-    private static boolean isContainedBonusNumber(int bonusNumber, LotteryGame lotteryGame) {
+    private boolean isContainedBonusNumber(int bonusNumber, LotteryGame lotteryGame) {
         if (lotteryGame.isContain(bonusNumber)) {
             RESULT_MAP.put(Rank.SECOND, RESULT_MAP.get(Rank.SECOND) + 1);
             return true;
@@ -57,22 +61,22 @@ public class WinningResult {
         return false;
     }
 
-    private static int getCorrectNumbers(List<Integer> winningNumbers, LotteryGame lotteryGame) {
+    private int getCorrectNumbers(WinningNumbers winningNumbers, LotteryGame lotteryGame) {
         int correctNumbers = 0;
-        for (Integer winningNumber : winningNumbers) {
+        for (Integer winningNumber : winningNumbers.getWinningNumbers()) {
             correctNumbers += getCorrectNumbers(lotteryGame, winningNumber);
         }
         return correctNumbers;
     }
 
-    private static int getCorrectNumbers(LotteryGame lotteryGame, Integer winningNumber) {
+    private int getCorrectNumbers(LotteryGame lotteryGame, Integer winningNumber) {
         if (lotteryGame.isContain(winningNumber)) {
             return CORRECT;
         }
         return NOT_CORRECT;
     }
 
-    public static int profit(Map<Rank, Integer> results) {
+    public int profit(Map<Rank, Integer> results) {
         int profit = 0;
         for (Rank rank : results.keySet()) {
             profit += results.get(rank) * rank.getWinningMoney();
@@ -80,7 +84,7 @@ public class WinningResult {
         return profit;
     }
 
-    public static double profitRate(int profit, int spent) {
+    public double profitRate(int profit, int spent) {
         return profit * 1.0 / spent;
     }
 }

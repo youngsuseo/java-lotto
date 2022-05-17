@@ -13,10 +13,10 @@ public class WinningNumbers {
 
     public WinningNumbers(List<Integer> winningNumbers, String number) {
         this.winningNumbers = winningNumbers;
-        get(number);
+        convertToList(number);
     }
 
-    public void get(String number) {
+    private void convertToList(String number) {
         Arrays.stream(number.split(",")).forEach(stringNumber -> winningNumbers.add(Integer.parseInt(stringNumber)));
     }
 
