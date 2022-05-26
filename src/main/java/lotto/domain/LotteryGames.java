@@ -21,7 +21,7 @@ public class LotteryGames {
         create(numberOfGames);
     }
 
-    public void create(int number) {
+    private void create(int number) {
         for (int i = 0; i < number; i++) {
             LotteryGame lotteryGame = LotteryGame.create();
             lotteryGames.add(lotteryGame);

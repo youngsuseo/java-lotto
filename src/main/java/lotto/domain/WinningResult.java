@@ -1,7 +1,6 @@
 package lotto.domain;
 
 import java.util.EnumMap;
-import java.util.List;
 import java.util.Map;
 
 public class WinningResult {
@@ -23,16 +22,20 @@ public class WinningResult {
     private WinningData winningData;
     private LotteryGames lotteryGames;
 
+    public WinningResult(WinningNumbers winningNumbers, int bonusNumber, LotteryGames lotteryGames) {
+        this(new WinningData(winningNumbers, bonusNumber), lotteryGames);
+    }
+
     public WinningResult(WinningData winningData, LotteryGames lotteryGames) {
         this.winningData = winningData;
         this.lotteryGames = lotteryGames;
     }
 
-    private Map<Rank, Integer> get() {
+    public Map<Rank, Integer> get() {
         for (LotteryGame lotteryGame : lotteryGames.getLotteryGames()) {
-            int correctNumbers = getCorrectNumbers(winningNumbers, lotteryGame);
+            int correctNumbers = matchNumbers(winningData.getWinningNumbers(), lotteryGame);
 
-            if (isNotWin(correctNumbers) || isSecondRank(bonusNumber, lotteryGame, correctNumbers)) {
+            if (isNotWin(correctNumbers) || isSecondRank(winningData.getBonusNumber(), lotteryGame, correctNumbers)) {
                 continue;
             }
 
@@ -41,6 +44,24 @@ public class WinningResult {
         }
         return RESULT_MAP;
     }
+
+    private int matchNumbers(LotteryGame lotteryGame) {
+        int matchedNumbers = 0;
+
+        for (Integer winningNumber : winningData.getWinningNumbers().getWinningNumbers()) {
+            matchedNumbers += countmatchedNumbers(lotteryGame, winningNumber);
+        }
+
+        boolean matchBonus = lotteryGame.isContain(matchedNumbers);
+
+        return matchedNumbers;
+    }
+
+
+
+
+
+
 
     private boolean isNotWin(int correctNumbers) {
         return correctNumbers < WINNING_CRITERIA;
@@ -61,15 +82,15 @@ public class WinningResult {
         return false;
     }
 
-    private int getCorrectNumbers(WinningNumbers winningNumbers, LotteryGame lotteryGame) {
-        int correctNumbers = 0;
+    private int matchNumbers(WinningNumbers winningNumbers, LotteryGame lotteryGame) {
+        int matchedNumbers = 0;
         for (Integer winningNumber : winningNumbers.getWinningNumbers()) {
-            correctNumbers += getCorrectNumbers(lotteryGame, winningNumber);
+            matchedNumbers += countmatchedNumbers(lotteryGame, winningNumber);
         }
-        return correctNumbers;
+        return matchedNumbers;
     }
 
-    private int getCorrectNumbers(LotteryGame lotteryGame, Integer winningNumber) {
+    private int countmatchedNumbers(LotteryGame lotteryGame, Integer winningNumber) {
         if (lotteryGame.isContain(winningNumber)) {
             return CORRECT;
         }
