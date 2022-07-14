@@ -15,18 +15,18 @@ public class LotteryMain {
     public static void main(String[] args) {
         int purchaseAmount = InputView.inputPurchaseAmount();
 
-        LotteryGames purchasedLottery = new LotteryGames(purchaseAmount);
-        ResultView.print(purchasedLottery);
+//        LotteryGames purchasedLottery = new LotteryGames(purchaseAmount);
+//        ResultView.print(purchasedLottery);
 
-        String winNumbers = InputView.inputWinningNumbers();
-        WinningNumbers winningNumbers = new WinningNumbers(winNumbers);
-        int bonusNumber = InputView.inputBonusNumber();
-
-        WinningResult winningResult = new WinningResult(winningNumbers, bonusNumber, purchasedLottery);
-        Map<Rank, Integer> results = winningResult.get();
-        ResultView.printResult(results);
-
-        double profitRate = winningResult.profitRate(winningResult.profit(results), purchaseAmount * EACH_PRICE);
-        ResultView.printProfit(profitRate);
+//        String winNumbers = InputView.inputWinningNumbers();
+//        WinningNumbers winningNumbers = new WinningNumbers(winNumbers);
+//        int bonusNumber = InputView.inputBonusNumber();
+//
+//        WinningResult winningResult = new WinningResult(winningNumbers, bonusNumber, purchasedLottery);
+//        Map<Rank, Integer> results = winningResult.get();
+//        ResultView.printResult(results);
+//
+//        double profitRate = winningResult.profitRate(winningResult.profit(results), purchaseAmount * EACH_PRICE);
+//        ResultView.printProfit(profitRate);
     }
 }

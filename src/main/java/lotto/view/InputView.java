@@ -9,13 +9,13 @@ public class InputView {
     public static int inputPurchaseAmount() {
         int purchasePrice = InputUtils.scanNumber("구매금액을 입력해 주세요.");
 
-        if (purchasePrice < EACH_PRICE) {
-            throw new IllegalArgumentException("로또 구매를 위해서는 천원 이상 입력해야 합니다.");
-        }
-
-        if (purchasePrice % EACH_PRICE != BASE_PRICE) {
-            throw new IllegalArgumentException("천원 단위로 입력해주세요.");
-        }
+//        if (purchasePrice < EACH_PRICE) {
+//            throw new IllegalArgumentException("로또 구매를 위해서는 천원 이상 입력해야 합니다.");
+//        }
+//
+//        if (purchasePrice % EACH_PRICE != BASE_PRICE) {
+//            throw new IllegalArgumentException("천원 단위로 입력해주세요.");
+//        }
 
         return printPurchaseAmount(purchasePrice / EACH_PRICE);
     }
